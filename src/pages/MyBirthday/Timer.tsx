@@ -70,46 +70,37 @@ function Timer({ date }: { date: string }) {
   const timeRemaining = formatTimeRemaining(timer.timeRemaining);
 
   return (
-    <div>
+    <>
       {isBirthday ? (
-        <h1>Happy Birthday🎉</h1>
-      ) : (
         <div>
-          <div>
-            <div>
-              <h1>
-                <strong>{timeRemaining.days}</strong>
-              </h1>
-            </div>
+          <h1 className="text-center font-bold text-6xl">Happy Birthday🎉</h1>
+          <p className="mt-4 text-center">
+            May this day be filled with joy, laughter and unforgettable moments. May your life be filled with bright colors of
+            happiness, love and success. May each new day bring you only good memories and prosperity. Happiness, health and
+            inspiration to you on this special day and always! 🎂🥳
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-8">
+          <div className="text-center">
+            <div className="font-bold text-6xl">{timeRemaining.days}</div>
             <div>days</div>
           </div>
-          <div>
-            <div>
-              <h1>
-                <strong>{timeRemaining.hours}</strong>
-              </h1>
-            </div>
+          <div className="text-center">
+            <div className="font-bold text-6xl">{timeRemaining.hours}</div>
             <div>hours</div>
           </div>
-          <div>
-            <div>
-              <h1>
-                <strong>{timeRemaining.minutes}</strong>
-              </h1>
-            </div>
+          <div className="text-center">
+            <div className="font-bold text-6xl">{timeRemaining.minutes}</div>
             <div>minutes</div>
           </div>
-          <div>
-            <div>
-              <h1>
-                <strong>{timeRemaining.seconds}</strong>
-              </h1>
-            </div>
+          <div className="text-center">
+            <div className="font-bold text-6xl">{timeRemaining.seconds}</div>
             <div>seconds</div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 
