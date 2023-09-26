@@ -1,0 +1,18 @@
+.nav-container {
+  display: flex;
+  gap: 20px;
+}
+
+.nav {
+  outline: none;
+  text-decoration: none;
+  background-color: #eaf2ff;
+  padding: 8px 24px;
+  color: #414141;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.nav:hover {
+  background-color: #ddeaffe1;
+}
