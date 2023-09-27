@@ -13,7 +13,7 @@ function Friends() {
   };
   return (
     <div className="grid place-items-center gap-4">
-      {showForm && <NewFriendForm callback={handleData} />}
+      {showForm && <NewFriendForm setData={handleData} closeForm={setShowForm} />}
       {userData.friends.length ? (
         userData.friends.map((friend, id) => <FriendCard key={id} friend={friend} />)
       ) : (
