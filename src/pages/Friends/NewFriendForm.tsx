@@ -1,6 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Friend } from '../../interfaces/userdata';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type Inputs = {
   name: string;
@@ -30,6 +30,8 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: Friend) => vo
   const {
     register,
     handleSubmit,
+    reset,
+    formState,
     formState: { errors },
   } = useForm<Inputs>();
 
@@ -44,6 +46,13 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: Friend) => vo
 
     setData(friend);
   };
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset({ name: '', birthday: '' });
+      setItems([]);
+    }
+  }, [formState, reset]);
 
   return (
     <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
