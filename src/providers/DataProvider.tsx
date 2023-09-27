@@ -1,15 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction, createContext, useEffect, useState } from 'react';
-
-interface UserData {
-  date: string;
-  friends: Friend[];
-}
-
-interface Friend {
-  name: string;
-  date: string;
-}
-
+import { UserData } from '../interfaces/userdata';
 interface DataProviderProps {
   children: ReactNode;
 }
@@ -33,7 +23,6 @@ function DataProvider({ children }: DataProviderProps) {
 
   useEffect(() => {
     localStorage.setItem('userData', JSON.stringify(userData));
-    console.log(userData);
   }, [userData]);
 
   return <DataContext.Provider value={{ userData, setUserData }}>{children}</DataContext.Provider>;

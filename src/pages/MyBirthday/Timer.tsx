@@ -81,21 +81,21 @@ function Timer({ date }: { date: string }) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-8">
+        <div className="grid grid-cols-4 gap-10">
           <div className="text-center">
-            <div className="font-bold text-6xl">{timeRemaining.days}</div>
+            <div className="font-bold text-8xl font-mono">{timeRemaining.days}</div>
             <div>days</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-6xl">{timeRemaining.hours}</div>
+            <div className="font-bold text-8xl font-mono">{timeRemaining.hours}</div>
             <div>hours</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-6xl">{timeRemaining.minutes}</div>
+            <div className="font-bold text-8xl font-mono">{timeRemaining.minutes}</div>
             <div>minutes</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-6xl">{timeRemaining.seconds}</div>
+            <div className="font-bold text-8xl font-mono">{timeRemaining.seconds}</div>
             <div>seconds</div>
           </div>
         </div>
