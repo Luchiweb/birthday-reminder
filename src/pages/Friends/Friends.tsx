@@ -2,20 +2,37 @@ import { useContext, useState } from 'react';
 import { DataContext } from '../../providers/DataProvider';
 import FriendCard from './Friend';
 import NewFriendForm from './NewFriendForm';
-import { Friend } from '../../interfaces/userdata';
+import { Friend, FriendData } from '../../interfaces/userdata';
 
 function Friends() {
   const [showForm, setShowForm] = useState<boolean>(false);
   const { userData, setUserData } = useContext(DataContext);
 
-  const handleData = (friend: Friend) => {
-    setUserData((prev) => ({ ...prev, friends: [...prev.friends, friend] }));
+  const handleData = (friend: FriendData) => {
+    setUserData((prev) => ({ ...prev, friends: [...prev.friends, { ...friend, id: prev.friends.length }] }));
   };
+
+  const changeFriend = (friend: Friend) => {
+    setUserData((prev) => {
+      const updatedFriends = prev.friends.map((item) => (item.id === friend.id ? friend : item));
+      return { ...prev, friends: updatedFriends };
+    });
+  };
+
+  const deleteFriend = (friend: Friend) => {
+    setUserData((prev) => {
+      const updatedFriends = prev.friends.filter((item) => item.id !== friend.id);
+      return { ...prev, friends: updatedFriends };
+    });
+  };
+
   return (
     <div className="grid place-items-center gap-4">
       {showForm && <NewFriendForm setData={handleData} closeForm={setShowForm} />}
       {userData.friends.length ? (
-        userData.friends.map((friend, id) => <FriendCard key={id} friend={friend} />)
+        userData.friends.map((friend, id) => (
+          <FriendCard key={id} friend={friend} changeFriend={changeFriend} deleteFriend={deleteFriend} />
+        ))
       ) : (
         <div>Your list is empty, but let's change it!</div>
       )}

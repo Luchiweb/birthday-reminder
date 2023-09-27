@@ -11,7 +11,7 @@ function Timer({ date }: { date: string }) {
     birthday.setHours(0);
     birthday.setFullYear(today.getFullYear());
 
-    if (birthday < today) birthday.setFullYear(new Date().getFullYear() + 1);
+    if (birthday < today) birthday.setFullYear(today.getFullYear() + 1);
     if (today.getDate() === birthday.getDate() && today.getMonth() === birthday.getMonth()) setIsBirthday(true);
     if (!isBirthday) setTimer({ targetDateTime: birthday, timeRemaining: calculateTimeRemaining(birthday), isRunning: true });
   }, [date, isBirthday]);

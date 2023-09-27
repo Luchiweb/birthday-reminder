@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Friend } from '../../interfaces/userdata';
+import { FriendData } from '../../interfaces/userdata';
 import { useEffect, useState } from 'react';
 
 type Inputs = {
@@ -12,7 +12,7 @@ interface Item {
   id: number;
 }
 
-function NewFriendForm({ setData, closeForm }: { setData: (friend: Friend) => void; closeForm: (close: boolean) => void }) {
+function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) => void; closeForm: (close: boolean) => void }) {
   const [items, setItems] = useState<Item[]>([]);
   const [counter, setCounter] = useState<number>(1);
 
@@ -36,7 +36,7 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: Friend) => vo
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    const friend: Friend = {
+    const friend: FriendData = {
       name: data.name,
       date: data.birthday,
       gifts: Object.keys(data)
