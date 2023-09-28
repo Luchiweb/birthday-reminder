@@ -8,10 +8,10 @@ function Friends() {
   const [showForm, setShowForm] = useState<boolean>(false);
   const { userData, setUserData } = useContext(DataContext);
 
-  const handleData = (friend: FriendData) => {
+  const addFriend = (friend: FriendData) => {
     setUserData((prev) => {
       const id = prev.friends.length ? prev.friends[prev.friends.length - 1].id + 1 : 1;
-      return { ...prev, friends: [...prev.friends, { ...friend, id: id }] };
+      return { ...prev, friends: [...prev.friends, { ...friend, id }] };
     });
   };
 
@@ -31,10 +31,10 @@ function Friends() {
 
   return (
     <div className="grid place-items-center gap-4">
-      {showForm && <NewFriendForm setData={handleData} closeForm={setShowForm} />}
+      {showForm && <NewFriendForm setData={addFriend} closeForm={setShowForm} />}
       {userData.friends.length ? (
-        userData.friends.map((friend, id) => (
-          <FriendCard key={id} friend={friend} changeFriend={changeFriend} deleteFriend={deleteFriend} />
+        userData.friends.map((friend) => (
+          <FriendCard key={friend.id} friend={friend} changeFriend={changeFriend} deleteFriend={deleteFriend} />
         ))
       ) : (
         <div>Your list is empty, but let's change it!</div>

@@ -1,15 +1,13 @@
 import { useMemo, useState } from 'react';
 import { Friend } from '../../interfaces/userdata';
 
-function FriendCard({
-  friend,
-  changeFriend,
-  deleteFriend,
-}: {
+interface FriendCardProps {
   friend: Friend;
   changeFriend: (friend: Friend) => void;
   deleteFriend: (friend: Friend) => void;
-}) {
+}
+
+function FriendCard({ friend, changeFriend, deleteFriend }: FriendCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newGift, setNewGift] = useState('');
 
@@ -31,7 +29,7 @@ function FriendCard({
 
     const timeDifference = birthday.getTime() - today.getTime();
     const seconds = Math.max(Math.floor(timeDifference / 1000), 0);
-    return Math.floor(seconds / (3600 * 24));
+    return Math.floor(seconds / (3600 * 24)) + 1;
   }, [friend]);
 
   return (
@@ -42,8 +40,8 @@ function FriendCard({
       <div className="">
         <div className="text-xl font-bold">{friend.name}</div>
         <div className="text-sm opacity-60">
-          {day || "Don't forget to congrats!"}
-          {' day' + (day % 10 === 1 ? '' : 's')}
+          {day || "Don't forget to congratulate!"}
+          {!day ? '' : ' day' + (day % 10 === 1 ? '' : 's')}
         </div>
       </div>
       <div className="ml-auto flex gap-2">

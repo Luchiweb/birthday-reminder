@@ -18,7 +18,7 @@ function Today() {
   return (
     <div>
       {newData.length ? (
-        newData.map((friend) => <div>{friend.name}</div>)
+        newData.map((friend) => <div key={friend.id}>{friend.name}</div>)
       ) : (
         <div>There are no birthdays today. But that's no reason not to have a party!🔥</div>
       )}

@@ -1,58 +1,47 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { FriendData } from '../../interfaces/userdata';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 type Inputs = {
   name: string;
   birthday: string;
-  [key: string]: string;
+  gifts: { [key: string]: string }[];
 };
 
-interface Item {
-  id: number;
-}
-
 function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) => void; closeForm: (close: boolean) => void }) {
-  const [items, setItems] = useState<Item[]>([]);
-  const [counter, setCounter] = useState<number>(1);
-
-  const handleAddItem = () => {
-    const newItem: Item = { id: counter };
-    setItems([...items, newItem]);
-    setCounter(counter + 1);
-  };
-
-  const handleRemoveItem = (idToRemove: number) => {
-    const updatedItems: Item[] = items.filter((item) => item.id !== idToRemove);
-    setItems(updatedItems);
-  };
-
   const {
     register,
     handleSubmit,
     reset,
-    formState,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
+    control,
   } = useForm<Inputs>();
+
+  const { fields, append, remove } = useFieldArray({ control, name: 'gifts' });
+
+  const addInput = () => {
+    append({});
+  };
+
+  const removeInput = (index: number) => {
+    remove(index);
+  };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const friend: FriendData = {
       name: data.name,
       date: data.birthday,
-      gifts: Object.keys(data)
-        .filter((key) => key.startsWith('gift') && data[key])
-        .map((key) => data[key]),
+      gifts: data.gifts.filter((gift) => gift.value !== '').map((gift) => gift.value),
     };
 
     setData(friend);
   };
 
   useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({ name: '', birthday: '' });
-      setItems([]);
+    if (isSubmitSuccessful) {
+      reset({ name: '', birthday: '', gifts: [] });
     }
-  }, [formState, reset]);
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
@@ -89,22 +78,19 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
       <div className="">
         <div className="flex gap-4 items-center mb-2">
           <h2 className="font-bold text-xl">Gift ideas</h2>
-          <div onClick={handleAddItem} className="w-6 h-6 text-center cursor-pointer rounded-full bg-pink-100">
+          <div onClick={addInput} className="w-6 h-6 text-center cursor-pointer rounded-full bg-pink-100">
             +
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          {items.map((item) => (
-            <div key={item.id} className="flex items-center gap-2">
+          {fields.map((field, index) => (
+            <div key={field.id} className="flex items-center gap-2">
               <input
-                {...register(`gift${item.id}`)}
+                {...register(`gifts.${index}.value`)}
                 className="w-full block rounded-xl outline-none bg-slate-100 px-3 py-2"
                 type="text"
               />
-              <div
-                onClick={() => handleRemoveItem(item.id)}
-                className="w-6 h-6 text-center cursor-pointer rounded-full bg-indigo-100"
-              >
+              <div onClick={() => removeInput(index)} className="w-6 h-6 text-center cursor-pointer rounded-full bg-indigo-100">
                 -
               </div>
             </div>

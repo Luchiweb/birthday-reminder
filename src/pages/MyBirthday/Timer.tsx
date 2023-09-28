@@ -1,40 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { isTodayBirthday } from '../../helpers/birthdate';
 
 function Timer({ date }: { date: string }) {
-  const [isBirthday, setIsBirthday] = useState<boolean>(false);
-  const [timer, setTimer] = useState({ targetDateTime: new Date(), timeRemaining: 0, isRunning: false });
-
-  useEffect(() => {
-    const birthday = new Date(date);
-    const today = new Date();
-
-    birthday.setHours(0);
-    birthday.setFullYear(today.getFullYear());
-
-    if (birthday < today) birthday.setFullYear(today.getFullYear() + 1);
-    if (today.getDate() === birthday.getDate() && today.getMonth() === birthday.getMonth()) setIsBirthday(true);
-    if (!isBirthday) setTimer({ targetDateTime: birthday, timeRemaining: calculateTimeRemaining(birthday), isRunning: true });
-  }, [date, isBirthday]);
+  const birthday = useMemo(() => new Date(date), [date]);
+  const isBirthday = useMemo(() => isTodayBirthday(birthday), [birthday]);
+  const [timer, setTimer] = useState({
+    targetDateTime: birthday,
+    timeRemaining: calculateTimeRemaining(birthday),
+    isRunning: !isBirthday,
+  });
 
   useEffect(() => {
     let timerInterval: number | null = null;
 
     const updateTimer = () => {
       setTimer((prevTimer) => {
-        const targetTime = new Date(prevTimer.targetDateTime).getTime();
+        const targetTime = prevTimer.targetDateTime.getTime();
         const currentTime = new Date().getTime();
         const timeRemaining = Math.max(Math.floor((targetTime - currentTime) / 1000), 0);
 
         if (timeRemaining === 0 && timerInterval) {
           clearInterval(timerInterval);
-          return {
-            ...timer,
-            isRunning: false,
-            timeRemaining: 0,
-          };
+          return { ...prevTimer, isRunning: false, timeRemaining: 0 };
         }
 
-        return { ...timer, timeRemaining };
+        return { ...prevTimer, timeRemaining };
       });
     };
 
@@ -47,11 +37,11 @@ function Timer({ date }: { date: string }) {
     };
   }, [timer, isBirthday]);
 
-  const calculateTimeRemaining = (targetTime: Date) => {
+  function calculateTimeRemaining(targetTime: Date) {
     const timeDifference = targetTime.getTime() - new Date().getTime();
     const secondsRemaining = Math.max(Math.floor(timeDifference / 1000), 0);
     return secondsRemaining;
-  };
+  }
 
   const formatTimeRemaining = (seconds: number) => {
     const days = Math.floor(seconds / (3600 * 24));
@@ -59,15 +49,10 @@ function Timer({ date }: { date: string }) {
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
 
-    return {
-      days,
-      hours,
-      minutes,
-      seconds: remainingSeconds,
-    };
+    return { days, hours, minutes, seconds: remainingSeconds };
   };
 
-  const timeRemaining = formatTimeRemaining(timer.timeRemaining);
+  const { days, hours, minutes, seconds } = formatTimeRemaining(timer.timeRemaining);
 
   return (
     <>
@@ -83,19 +68,19 @@ function Timer({ date }: { date: string }) {
       ) : (
         <div className="grid grid-cols-4 gap-10">
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{timeRemaining.days}</div>
+            <div className="font-bold text-8xl font-mono">{days}</div>
             <div>days</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{timeRemaining.hours}</div>
+            <div className="font-bold text-8xl font-mono">{hours}</div>
             <div>hours</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{timeRemaining.minutes}</div>
+            <div className="font-bold text-8xl font-mono">{minutes}</div>
             <div>minutes</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{timeRemaining.seconds}</div>
+            <div className="font-bold text-8xl font-mono">{seconds}</div>
             <div>seconds</div>
           </div>
         </div>
