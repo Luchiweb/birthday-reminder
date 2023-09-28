@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { DataContext } from '../../providers/DataProvider';
-import FriendCard from './Friend';
+import FriendCard from '../../components/friend/Friend';
 import NewFriendForm from './NewFriendForm';
 import { Friend, FriendData } from '../../interfaces/userdata';
 
@@ -9,7 +9,10 @@ function Friends() {
   const { userData, setUserData } = useContext(DataContext);
 
   const handleData = (friend: FriendData) => {
-    setUserData((prev) => ({ ...prev, friends: [...prev.friends, { ...friend, id: prev.friends.length }] }));
+    setUserData((prev) => {
+      const id = prev.friends.length ? prev.friends[prev.friends.length - 1].id + 1 : 1;
+      return { ...prev, friends: [...prev.friends, { ...friend, id: id }] };
+    });
   };
 
   const changeFriend = (friend: Friend) => {
