@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { DataContext } from '../../providers/DataProvider';
+import BirthdayCard from '../../components/friend/BirthdayCard';
 
 function Today() {
   const { userData } = useContext(DataContext);
@@ -16,9 +17,9 @@ function Today() {
     return false;
   });
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {newData.length ? (
-        newData.map((friend) => <div key={friend.id}>{friend.name}</div>)
+        newData.map((friend) => <BirthdayCard key={friend.id} friend={friend} />)
       ) : (
         <div>There are no birthdays today. But that's no reason not to have a party!🔥</div>
       )}
