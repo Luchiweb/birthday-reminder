@@ -38,9 +38,7 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
   };
 
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset({ name: '', birthday: '', gifts: [] });
-    }
+    if (isSubmitSuccessful) reset({ name: '', birthday: '', gifts: [] });
   }, [isSubmitSuccessful, reset]);
 
   return (
@@ -51,7 +49,15 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
           <label className="opacity-80 text-sm" htmlFor="name">
             Name
           </label>
-          <input {...register('name', { required: 'The name is required' })} id="name" className="form-input " type="text" />
+          <input
+            {...register('name', {
+              required: 'The name is required',
+              maxLength: { value: 24, message: 'Name is too long' },
+            })}
+            id="name"
+            className="form-input"
+            type="text"
+          />
           {errors.name && <div className="error text-xs font-normal text-red-400">{errors.name.message}</div>}
         </div>
         <div className="">

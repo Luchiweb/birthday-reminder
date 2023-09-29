@@ -29,7 +29,7 @@ function Timer({ date }: { date: string }) {
     };
 
     if (timer.isRunning && timer.timeRemaining > 0 && !isBirthday) {
-      timerInterval = setInterval(updateTimer, 1000);
+      timerInterval = window.setInterval(updateTimer, 1000);
     }
 
     return () => {
