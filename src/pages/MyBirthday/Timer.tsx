@@ -68,19 +68,19 @@ function Timer({ date }: { date: string }) {
       ) : (
         <div className="grid grid-cols-4 gap-10">
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{days}</div>
+            <div className="font-bold text-3xl md:text-8xl lg:text-9xl font-mono">{days}</div>
             <div>days</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{hours}</div>
+            <div className="font-bold text-3xl md:text-8xl lg:text-9xl font-mono">{hours}</div>
             <div>hours</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{minutes}</div>
+            <div className="font-bold text-3xl md:text-8xl lg:text-9xl font-mono">{minutes}</div>
             <div>minutes</div>
           </div>
           <div className="text-center">
-            <div className="font-bold text-8xl font-mono">{seconds}</div>
+            <div className="font-bold text-3xl md:text-8xl lg:text-9xl font-mono">{seconds}</div>
             <div>seconds</div>
           </div>
         </div>

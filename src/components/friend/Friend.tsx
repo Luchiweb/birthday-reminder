@@ -33,18 +33,18 @@ function FriendCard({ friend, changeFriend, deleteFriend }: FriendCardProps) {
   }, [friend]);
 
   return (
-    <div className="flex gap-2 rounded-xl w-full bg-gray-100 p-4 items-center">
+    <div className="flex flex-col md:flex-row gap-2 rounded-xl w-full bg-gray-100 p-4 items-center">
       <div className="rounded-full w-12 h-12 overflow-hidden flex items-center justify-center">
         <img src={`./avatars/avatar-${(friend.id % 5) + 1}.jpg`} alt="" />
       </div>
-      <div className="">
+      <div className="text-center md:text-start">
         <div className="text-xl font-bold">{friend.name}</div>
         <div className="text-sm opacity-60">
           {day || "Don't forget to congratulate!"}
           {!day ? '' : ' day' + (day > 1 ? 's' : '')}
         </div>
       </div>
-      <div className="ml-auto flex gap-2">
+      <div className="md:ml-auto flex gap-2">
         <div className="rounded-xl leading-none bg-orange-200 py-3 px-3 grid place-items-center h-fit">
           <button onClick={() => setIsModalOpen(true)}>🎁</button>
         </div>
