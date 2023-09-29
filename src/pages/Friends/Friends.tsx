@@ -40,10 +40,7 @@ function Friends() {
         <div>Your list is empty, but let's change it!</div>
       )}
       {!showForm && (
-        <button
-          onClick={() => setShowForm(true)}
-          className="inline-flex items-center justify-center px-4 py-2 text-base leading-5 rounded-full border font-medium transition ease-in-out duration-150 focus:outline-none bg-indigo-100 border-indigo-100 hover:bg-indigo-200 hover:border-indigo-200"
-        >
+        <button onClick={() => setShowForm(true)} className="primary-button">
           add new friend
         </button>
       )}

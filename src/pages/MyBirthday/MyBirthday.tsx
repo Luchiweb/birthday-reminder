@@ -17,18 +17,10 @@ function MyBirthday() {
           <Timer date={userData.date}></Timer>
         </div>
       ) : (
-        <div>
-          <input
-            className="rounded-xl outline-none bg-slate-100 px-3 py-2"
-            type="date"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          ></input>
-          <button
-            className="inline-flex items-center justify-center px-4 py-2 text-base leading-5 rounded-full border font-medium transition ease-in-out duration-150 focus:outline-none bg-blue-100 border-blue-100 hover:bg-blue-200 hover:border-blue-200"
-            onClick={handleData}
-          >
-            set data
+        <div className="flex flex-col gap-4">
+          <input className="form-input" type="date" value={inputValue} onChange={(e) => setInputValue(e.target.value)}></input>
+          <button className="primary-button" onClick={handleData}>
+            set your birthday
           </button>
         </div>
       )}

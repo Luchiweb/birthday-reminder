@@ -20,3 +20,15 @@ body {
   font-weight: 500;
   color: #414141;
 }
+
+.primary-button {
+  @apply inline-flex items-center justify-center px-4 py-2 text-base leading-5 rounded-full border font-medium transition ease-in-out duration-150 focus:outline-none bg-blue-100 border-blue-100 hover:bg-blue-200 hover:border-blue-200;
+}
+
+.secondary-button {
+  @apply inline-flex items-center justify-center px-4 py-2 text-base leading-5 rounded-full border font-medium transition ease-in-out duration-150 focus:outline-none bg-transparent border-blue-100 hover:bg-blue-200 hover:border-blue-200;
+}
+
+.form-input {
+  @apply w-full block rounded-xl outline-none bg-slate-100 px-3 py-2;
+}

@@ -51,12 +51,7 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
           <label className="opacity-80 text-sm" htmlFor="name">
             Name
           </label>
-          <input
-            {...register('name', { required: 'The name is required' })}
-            id="name"
-            className="w-full block rounded-xl outline-none bg-slate-100 px-3 py-2"
-            type="text"
-          />
+          <input {...register('name', { required: 'The name is required' })} id="name" className="form-input " type="text" />
           {errors.name && <div className="error text-xs font-normal text-red-400">{errors.name.message}</div>}
         </div>
         <div className="">
@@ -69,7 +64,7 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
               max: { value: new Date().toISOString().split('T')[0], message: "Looks like your friend wasn't born yet." },
             })}
             id="birthday"
-            className="w-full block rounded-xl outline-none bg-slate-100 px-3 py-2"
+            className="form-input"
             type="date"
           />
           {errors.birthday && <div className="error text-xs font-normal text-red-400">{errors.birthday.message}</div>}
@@ -85,11 +80,7 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
         <div className="flex flex-col gap-2">
           {fields.map((field, index) => (
             <div key={field.id} className="flex items-center gap-2">
-              <input
-                {...register(`gifts.${index}.value`)}
-                className="w-full block rounded-xl outline-none bg-slate-100 px-3 py-2"
-                type="text"
-              />
+              <input {...register(`gifts.${index}.value`)} className="form-input " type="text" />
               <div onClick={() => removeInput(index)} className="w-6 h-6 text-center cursor-pointer rounded-full bg-indigo-100">
                 -
               </div>
@@ -98,17 +89,10 @@ function NewFriendForm({ setData, closeForm }: { setData: (friend: FriendData) =
         </div>
       </div>
       <div className="flex justify-between gap-4">
-        <button
-          onClick={() => closeForm(false)}
-          className="inline-flex w-full items-center justify-center px-4 py-2 text-base leading-5 rounded-full border font-medium transition ease-in-out duration-150 focus:outline-none bg-transparent border-blue-100 hover:bg-blue-200 hover:border-blue-200"
-          type="button"
-        >
+        <button onClick={() => closeForm(false)} className="secondary-button w-full" type="button">
           close
         </button>
-        <button
-          className="inline-flex w-full items-center justify-center px-4 py-2 text-base leading-5 rounded-full border font-medium transition ease-in-out duration-150 focus:outline-none bg-blue-100 border-blue-100 hover:bg-blue-200 hover:border-blue-200"
-          type="submit"
-        >
+        <button className="primary-button w-full" type="submit">
           add friend
         </button>
       </div>
